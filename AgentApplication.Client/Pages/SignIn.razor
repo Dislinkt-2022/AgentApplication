@@ -1,0 +1,32 @@
+﻿@page "/SignIn"
+
+<EditForm Model="SignInModel" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator/>
+
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell-span-4"></div>
+            <div class="mat-layout-grid-cell-span-4"></div>
+            <div class="mat-layout-grid-cell-span-4"></div>
+            <div class="mat-layout-grid-cell-span-4"></div>
+            <div class="mat-layout-grid-cell-span-4" style="text-align: center;">
+                <p>
+                    <MatTextField Label="Username" @bind-Value="SignInModel.UserName"/>
+                    <ValidationMessage For="@(() => SignInModel.UserName)"/>
+                </p>
+                <p>
+                    <MatTextField Label="Password" @bind-Value="SignInModel.Password" Type="password"/>
+                    <ValidationMessage For="@(() => SignInModel.Password)"/>
+                </p>
+                <p>
+                    <MatButton Type="submit" Raised="true">Sign In</MatButton>
+                    <MatButton OnClick="Reset">Reset</MatButton>
+                </p>  
+                <p>
+                    <MatButtonLink>Forgot password?</MatButtonLink>
+                </p>         
+            </div>
+            <div class="mat-layout-grid-cell-span-4"></div>
+        </div>
+    </div>
+</EditForm>

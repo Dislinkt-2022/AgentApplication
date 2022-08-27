@@ -1,17 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<MatAppBarContainer>
+    <MatAppBar Fixed="true">
+        <MatAppBarRow>
+            <MatAppBarSection>
+                <MatIconButton Icon="work_outline"></MatIconButton>
+                <MatAppBarTitle>Company Catalog</MatAppBarTitle>     
+            </MatAppBarSection >
+            <MatAppBarSection Align="@MatAppBarSectionAlign.Start">    
+                <Search/>
+            </MatAppBarSection>
+            <MatAppBarSection Align="@MatAppBarSectionAlign.End">
+                <MatButtonLink Href="/Register" Unelevated="true">Register</MatButtonLink>
+                <MatButtonLink Href="/SignIn" Unelevated="true">Sign In</MatButtonLink>
+            </MatAppBarSection>
+        </MatAppBarRow>
+    </MatAppBar>
+ 
+    <MatAppBarContent>
+        @Body
+    </MatAppBarContent>
+</MatAppBarContainer>
