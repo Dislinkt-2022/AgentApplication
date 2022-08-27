@@ -1,0 +1,15 @@
+﻿<div>
+    <MatAutocompleteList Items="@Options" TItem="string" @bind-Value="@SelectedOption" Label="Search companies" ShowClearButton="true"></MatAutocompleteList>
+    <MatIconButton Icon="search" OnClick="@HandleSubmit"></MatIconButton>
+</div>
+
+@code {
+    List<string> Options { get; set; } = new List<string>() { "Infora Research Group", "HTEC", "Vega It" };
+
+    string SelectedOption { get; set; }
+ 
+    void HandleSubmit()
+    {
+        Console.WriteLine("On Valid Submit");
+    }
+}

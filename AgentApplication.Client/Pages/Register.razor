@@ -1,0 +1,54 @@
+﻿@page "/Register"
+
+@using System.ComponentModel.DataAnnotations
+@using AgentApplication.Client.Model.DTO
+
+<EditForm Model="RegisterModel" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator/>
+
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell-span-4"></div>
+            <div class="mat-layout-grid-cell-span-4"></div>
+            <div class="mat-layout-grid-cell-span-4"></div>
+            <div class="mat-layout-grid-cell-span-1"></div>
+            <div class="mat-layout-grid-cell-span-10" style="text-align: center;">
+                <p>
+                    <MatTextField Label="First Name" @bind-Value="RegisterModel.FirstName"/>
+                    <ValidationMessage For="@(() => RegisterModel.FirstName)"/>
+                </p>
+                <p>
+                    <MatTextField Label="Last Name" @bind-Value="RegisterModel.LastName"/>
+                    <ValidationMessage For="@(() => RegisterModel.LastName)"/>
+                </p>
+                <p>
+                    <MatTextField Label="Email" @bind-Value="RegisterModel.Email"/>
+                    <ValidationMessage For="@(() => RegisterModel.Email)"/>
+                </p>
+                <p>
+                    <MatTextField Label="Username" @bind-Value="RegisterModel.UserName"/>
+                    <ValidationMessage For="@(() => RegisterModel.UserName)"/>
+                </p>
+                <p>
+                    <MatTextField Label="Password" @bind-Value="RegisterModel.Password" Type="password"/>
+                    <ValidationMessage For="@(() => RegisterModel.Password)"/>
+                </p>
+                <p>
+                    <MatTextField Label="Confirm Password" @bind-Value="RegisterModel.ConfirmPassword" Type="password"/>
+                    <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)"/>
+                </p>
+                <p>
+                    <MatButton Type="submit" Raised="true">Register</MatButton>
+                    <MatButton OnClick="Reset">Reset</MatButton>
+                </p>          
+            </div>
+            <div class="mat-layout-grid-cell-span-1"></div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    
+
+    
+}
