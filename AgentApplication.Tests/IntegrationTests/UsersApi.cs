@@ -1,10 +1,10 @@
-﻿using AgentApplication.WebAPI.Entitites.DTO;
+using AgentApplication.WebAPI.Entitites.DTO;
 using FluentAssertions;
 using System.Net;
 using System.Net.Http.Json;
 
 namespace AgentApplication.Tests.IntegrationTests
-{
+{//
     public class UsersApi
     {
         private readonly HttpClient _httpClient;
