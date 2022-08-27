@@ -12,7 +12,7 @@ namespace AgentApplication.Tests.IntegrationTests
             var webAppFactory = new CustomWebApplicationFactory<Program>();
             _httpClient = webAppFactory.CreateDefaultClient();
         }
-
+        /*
         [Fact]
         public async Task GetAllowAnonymousTest_StatusCode200()
         {
@@ -39,6 +39,6 @@ namespace AgentApplication.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
 
-
+        */
     }
 }
