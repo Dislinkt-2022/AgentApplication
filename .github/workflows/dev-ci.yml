@@ -2,7 +2,7 @@ name: Dev branch CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ dev ]
 
 jobs:
   build:
