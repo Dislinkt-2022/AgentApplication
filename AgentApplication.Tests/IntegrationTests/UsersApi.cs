@@ -80,7 +80,6 @@ namespace AgentApplication.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-        /*
         [Fact]
         public async Task SingInAdmin_ResponseOk()
         {
@@ -94,7 +93,6 @@ namespace AgentApplication.Tests.IntegrationTests
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
-        */
 
         [Fact]
         public async Task SingInAdmin_ResponseBadRequest()
