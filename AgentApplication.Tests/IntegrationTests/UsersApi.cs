@@ -1,4 +1,4 @@
-﻿using AgentApplication.WebAPI.Entitites.DTO;
+using AgentApplication.WebAPI.Entitites.DTO;
 using FluentAssertions;
 using System.Net;
 using System.Net.Http.Json;
