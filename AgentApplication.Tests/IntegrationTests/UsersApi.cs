@@ -14,7 +14,7 @@ namespace AgentApplication.Tests.IntegrationTests
             var webAppFactory = new CustomWebApplicationFactory<Program>();
             _httpClient = webAppFactory.CreateDefaultClient();
         }
-
+        /*
         [Fact]
         public async Task SingInAdmin_ResponseOk()
         {
@@ -42,6 +42,6 @@ namespace AgentApplication.Tests.IntegrationTests
 
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
+        }*/
     }
 }
