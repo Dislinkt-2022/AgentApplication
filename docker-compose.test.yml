@@ -36,10 +36,9 @@ services:
     environment:
       - ConnectionStrings__Database=Data Source=agent-test-database-server;Initial Catalog=CompanyCatalog;User Id=sa;Password=StrongPassword1;Pooling=False;Max Pool Size=200;MultipleActiveResultSets=True
     depends_on:
-      agent-test-database-server:
-        condition: service_healthy
       agent-test-database-migrations:
-        condition: service_completed_successfully 
+        condition: service_started
+      
 
 volumes:
   test_mssqldata:

@@ -14,4 +14,5 @@ using (var context = (CompanyCatalogContext)webHost.Services.GetService(typeof(C
     context.Database.Migrate();
 }
 
+Thread.Sleep(TimeSpan.FromHours(1));
 Console.WriteLine("Done");

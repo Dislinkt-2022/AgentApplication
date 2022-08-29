@@ -38,7 +38,5 @@ namespace AgentApplication.Tests.IntegrationTests
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
-
-        */
     }
 }
