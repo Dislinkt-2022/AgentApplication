@@ -16,15 +16,18 @@ namespace AgentApplication.WebAPI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly ITokenCreationService _tokenCreationService;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
         public UsersController(
             UserManager<User> userManager,
             ITokenCreationService tokenCreationService,
-            IMapper mapper)
+            IMapper mapper,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _tokenCreationService = tokenCreationService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         [HttpPost("Register")]
@@ -38,6 +41,30 @@ namespace AgentApplication.WebAPI.Controllers
 
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
+
+            return Ok();
+        }
+
+        [HttpPost("RegisterAdmin")]
+        public async Task<ActionResult> RegisterAdminAsync()
+        {
+            var admin = await _userManager.FindByNameAsync(_configuration["Administrator:UserName"]);
+            if (admin == null)
+            {
+                var user = new User
+                {
+                    FirstName = string.Empty,
+                    LastName = string.Empty,
+                    IsAdmin = true,
+                    UserName = _configuration["Administrator:UserName"],
+                    Email = _configuration["Administrator:Email"]
+                };
+
+                var result = await _userManager.CreateAsync(user, _configuration["Administrator:Password"]);
+
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+            }
 
             return Ok();
         }
