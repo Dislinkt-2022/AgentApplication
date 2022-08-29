@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AgentApplication.Tests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

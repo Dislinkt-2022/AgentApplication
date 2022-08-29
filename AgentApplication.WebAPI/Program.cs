@@ -56,7 +56,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddHostedService<RegisterAdminHostedService>();
+//builder.Services.AddHostedService<RegisterAdminHostedService>();
 
 builder.Services.AddScoped<ITokenCreationService, JwtService>();
 

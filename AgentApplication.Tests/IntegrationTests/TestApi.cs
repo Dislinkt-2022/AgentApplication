@@ -13,6 +13,11 @@ namespace AgentApplication.Tests.IntegrationTests
             _httpClient = webAppFactory.CreateDefaultClient();
         }
 
+        private async Task HealthCheck()
+        {
+            await _httpClient.GetAsync(requestUri: "api/HealthCheck");
+        }
+
         [Fact]
         public async Task GetAllowAnonymousTest_StatusCode200()
         {

@@ -9,11 +9,11 @@ namespace AgentApplication.Tests
 {
     internal class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
-        private const string ENV = "Tests";
+        //private const string ENV = "Tests";
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.UseEnvironment(ENV);
+            //builder.UseEnvironment(ENV);
 
             builder.ConfigureServices(services =>
             {
@@ -21,6 +21,7 @@ namespace AgentApplication.Tests
                 {
                     var configuration = services.BuildServiceProvider().GetService<IConfiguration>();
                     options.UseSqlServer(configuration.GetConnectionString("Database"));
+
                 });
             });
         }
