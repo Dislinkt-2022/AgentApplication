@@ -1,4 +1,4 @@
-name: Dev branch CI
+name: Dev branch - CI pipeline (build, test, analyze)
 
 on:
   pull_request:

@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Data/Init/Dockerfile
+      args:
+        SA_PASSWORD: StrongPassword1
     networks:
       - agent-network
     healthcheck:
