@@ -7,4 +7,4 @@ ENV SA_PASSWORD=${SA_PASSWORD}
 COPY ./Data/Init /
 
 ENTRYPOINT [ "/bin/bash", "entrypoint.sh" ]
-CMD [ "/opt/mssql/bin/sqlservr", ${SA_PASSWORD} ]
+CMD [ "/opt/mssql/bin/sqlservr", SA_PASSWORD ]
