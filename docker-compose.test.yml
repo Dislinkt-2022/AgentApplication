@@ -1,0 +1,51 @@
+services:
+  agent-test-database-server:
+    image:  agent-test-database-server
+    build:
+      context: .
+      dockerfile: Data/Init/Dockerfile
+      args:
+        SA_PASSWORD: StrongTestPassword1
+    networks:
+      - agent-test-network
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-PStrongTestPassword1", "-Q", "select 1"]
+      interval: 5s
+      retries: 20
+    volumes:
+     - test_mssqldata:/var/opt/mssql
+
+  agent-test-database-migrations:
+    image: agent-test-database-migrations
+    build:
+      context: .
+      dockerfile: AgentApplication.Migration/Dockerfile
+    networks:
+      - agent-test-network
+    environment:
+      - ConnectionStrings__Database=Data Source=agent-test-database-server;Initial Catalog=CompanyCatalog;User Id=sa;Password=StrongTestPassword1;Pooling=False;Max Pool Size=200;MultipleActiveResultSets=True
+    depends_on:
+      agent-test-database-server:
+        condition: service_healthy
+
+  agent-application-tests:
+    image: agent-application-tests
+    build: 
+      context: .
+      dockerfile: AgentApplication.Tests/Dockerfile
+    networks:
+      - agent-test-network
+    environment:
+      - ConnectionStrings__Database=Data Source=agent-test-database-server;Initial Catalog=CompanyCatalog;User Id=sa;Password=StrongTestPassword1;Pooling=False;Max Pool Size=200;MultipleActiveResultSets=True
+    depends_on:
+      agent-test-database-migrations:
+        condition: service_started
+      
+
+volumes:
+  test_mssqldata:
+
+networks:
+  agent-test-network:
+    name: agent-network
+    driver: bridge
