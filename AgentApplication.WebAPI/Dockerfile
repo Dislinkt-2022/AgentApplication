@@ -1,22 +1,20 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS publish
 WORKDIR /src
 COPY ["AgentApplication.WebAPI/AgentApplication.WebAPI.csproj", "AgentApplication.WebAPI/"]
-RUN dotnet restore "AgentApplication.WebAPI/AgentApplication.WebAPI.csproj"
+
+RUN dotnet restore "AgentApplication.WebAPI/AgentApplication.WebAPI.csproj" --runtime alpine-x64
 COPY . .
-WORKDIR "/src/AgentApplication.WebAPI"
-RUN dotnet build "AgentApplication.WebAPI.csproj" -c Release -o /app/build
+RUN dotnet publish "AgentApplication.WebAPI/AgentApplication.WebAPI.csproj" -c Release -o /app/publish \
+    --no-restore \
+    --runtime alpine-x64 \
+    --self-contained true \
+    /p:PublishTrimmed=true \
+    /p:PublishSingleFile=true
 
-FROM build AS publish
-RUN dotnet publish "AgentApplication.WebAPI.csproj" -c Release -o /app/publish
-
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-alpine AS final
 WORKDIR /app
+
+EXPOSE 80
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AgentApplication.WebAPI.dll"]
+
+ENTRYPOINT ["./AgentApplication.WebAPI"]

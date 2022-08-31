@@ -1,7 +1,5 @@
-using AgentApplication.WebAPI.Entitites.DTO;
-using FluentAssertions;
-using System.Net;
-using System.Net.Http.Json;
+using AgentApplication.WebAPI;
+
 
 namespace AgentApplication.Tests.IntegrationTests
 {

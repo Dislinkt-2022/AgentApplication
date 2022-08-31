@@ -1,5 +1,4 @@
 using AgentApplication.WebAPI.Entitites.Model;
-using AgentApplication.WebAPI.HostedServices;
 using AgentApplication.WebAPI.Services;
 using AgentApplication.WebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,7 +19,7 @@ builder.Services.AddIdentityCore<User>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
-    
+
 }).AddEntityFrameworkStores<CompanyCatalogContext>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -67,8 +66,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 

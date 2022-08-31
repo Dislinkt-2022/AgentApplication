@@ -23,9 +23,9 @@ jobs:
           context: AgentApplication.WebAPI/.
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-api:dev
-      - name: Build and push Migration console application
+      - name: Build and push frontend application
         uses: docker/build-push-action@v2
         with:
-          context: AgentApplication.Migration/.
+          context: AgentApplication.Client/.
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-migration:dev
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-fe:dev
