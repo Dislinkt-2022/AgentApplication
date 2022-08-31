@@ -4,10 +4,12 @@ services:
     build:
       context: .
       dockerfile: Data/Init/Dockerfile
+      args:
+        SA_PASSWORD: StrongTestPassword1
     networks:
       - agent-test-network
     healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-PStrongPassword1", "-Q", "select 1"]
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-PStrongTestPassword1", "-Q", "select 1"]
       interval: 5s
       retries: 20
     volumes:
@@ -21,7 +23,7 @@ services:
     networks:
       - agent-test-network
     environment:
-      - ConnectionStrings__Database=Data Source=agent-test-database-server;Initial Catalog=CompanyCatalog;User Id=sa;Password=StrongPassword1;Pooling=False;Max Pool Size=200;MultipleActiveResultSets=True
+      - ConnectionStrings__Database=Data Source=agent-test-database-server;Initial Catalog=CompanyCatalog;User Id=sa;Password=StrongTestPassword1;Pooling=False;Max Pool Size=200;MultipleActiveResultSets=True
     depends_on:
       agent-test-database-server:
         condition: service_healthy
@@ -34,7 +36,7 @@ services:
     networks:
       - agent-test-network
     environment:
-      - ConnectionStrings__Database=Data Source=agent-test-database-server;Initial Catalog=CompanyCatalog;User Id=sa;Password=StrongPassword1;Pooling=False;Max Pool Size=200;MultipleActiveResultSets=True
+      - ConnectionStrings__Database=Data Source=agent-test-database-server;Initial Catalog=CompanyCatalog;User Id=sa;Password=StrongTestPassword1;Pooling=False;Max Pool Size=200;MultipleActiveResultSets=True
     depends_on:
       agent-test-database-migrations:
         condition: service_started

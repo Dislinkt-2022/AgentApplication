@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using System.Net;
+using AgentApplication.WebAPI;
 
 namespace AgentApplication.Tests.IntegrationTests
 {
