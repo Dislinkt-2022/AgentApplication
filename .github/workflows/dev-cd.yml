@@ -20,12 +20,27 @@ jobs:
       - name: Build and push Web API
         uses: docker/build-push-action@v2
         with:
-          context: AgentApplication.WebAPI/.
+          context: .
+          file: AgentApplication.WebAPI/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-api:dev
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-api:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-api:buildcache,mode=max
+      - name: Build and push Migration console application
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: AgentApplication.Migration/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-migration:dev
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-migration:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-migration:buildcache,mode=max
       - name: Build and push frontend application
         uses: docker/build-push-action@v2
         with:
-          context: AgentApplication.Client/.
+          context: .
+          file: AgentApplication.Client/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-fe:dev
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-fe:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-fe:buildcache,mode=max
