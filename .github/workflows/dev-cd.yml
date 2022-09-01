@@ -26,15 +26,6 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-api:dev
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-api:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-api:buildcache,mode=max
-      - name: Build and push Migration console application
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: AgentApplication.Migration/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/agent-application-migration:dev
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-migration:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agent-application-migration:buildcache,mode=max
       - name: Build and push frontend application
         uses: docker/build-push-action@v2
         with:
