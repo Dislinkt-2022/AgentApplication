@@ -1,6 +1,8 @@
 using AgentApplication.WebAPI.Entitites.Model;
+using AgentApplication.WebAPI.HostedServices;
 using AgentApplication.WebAPI.Services;
 using AgentApplication.WebAPI.Services.Interfaces;
+using AgentApplication.WebAPI.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -8,7 +10,35 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<CompanyCatalogContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+if (Environment.GetEnvironmentVariable("DATABASE_URL") != null && Environment.GetEnvironmentVariable("CORS_ORIGIN") != null)
+{
+    // Heroku database connection
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    var connectionString = HerokuPostgresConfiguration.ParseConnectionString(databaseUrl);
+    
+    builder.Services.AddDbContext<CompanyCatalogContext>(options => options.UseNpgsql(connectionString));
+
+    // Heroku CORS
+    var corsOrigin = Environment.GetEnvironmentVariable("CORS_ORIGIN");
+
+    builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.WithOrigins(new string[] { corsOrigin })
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    }));
+}
+else
+{
+    builder.Services.AddDbContext<CompanyCatalogContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+
+    builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.WithOrigins(builder.Configuration.GetSection("Origins").Value.Split(','))
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    }));
+}
 
 builder.Services.AddIdentityCore<User>(options =>
 {
@@ -39,14 +69,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddCors(options =>
-    options.AddPolicy("CorsPolicy", policy =>
-    {
-        policy
-        .WithOrigins(builder.Configuration.GetSection("Origins").Value.Split(','))
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-    }));
+
 
 builder.Services.AddControllers();
 
@@ -56,6 +79,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //builder.Services.AddHostedService<RegisterAdminHostedService>();
+builder.Services.AddHostedService<MigrationService>();
 
 builder.Services.AddScoped<ITokenCreationService, JwtService>();
 

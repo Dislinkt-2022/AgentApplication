@@ -20,7 +20,7 @@ namespace AgentApplication.Tests
                 services.AddDbContext<CompanyCatalogContext>(options =>
                 {
                     var configuration = services.BuildServiceProvider().GetService<IConfiguration>();
-                    options.UseSqlServer(configuration.GetConnectionString("Database"));
+                    options.UseNpgsql(configuration.GetConnectionString("Database"));
 
                 });
             });
